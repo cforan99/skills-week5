@@ -80,17 +80,35 @@ def get_brands_summary():
 
 # Part 2.5: Advanced and Optional
 def search_brands_by_name(mystr):
-    pass
+    
+    search = db.session.query(Brand).filter(Brand.name.like('%'+mystr'%')).all()
+
+    return search
 
 
 def get_models_between(start_year, end_year):
-    pass
+
+	models = db.session.query(Model).filter(
+		((Model.year == start_year) | (Model.year > start_year)) &
+		((Model.year == end_year) | (Model.year < end_year))
+		).all()
+	    
+    return models
 
 # -------------------------------------------------------------------
 
 # Part 3: Discussion Questions (Include your answers as comments.)
 
 # 1. What is the returned value and datatype of ``Brand.query.filter_by(name='Ford')``?
+## This query returns a BaseQuery object rather than the list of objects that match that query.
+## Without .all() at the end, the object that is returned is like a question "package" rather than the answer.
+## This is returned: <flask_sqlalchemy.BaseQuery object at 0x103c84dd0>
 
 # 2. In your own words, what is an association table, and what *type* of relationship
 # does an association table manage?
+## An association table manages tables that have a many-to-many relationship. 
+## Since tables can only be related as one-to-many (or one-to-one in rare cases),
+## the association table only holds the primary keys of the tables it is connecting as foreign keys.
+
+
+
