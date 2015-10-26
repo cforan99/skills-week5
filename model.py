@@ -21,13 +21,11 @@ class Model(db.Model):
     brand_name = db.Column(db.String(50), nullable=True)
     name = db.Column(db.String(50), nullable=False)
 
-    brand_id = db.Column(db.Integer, db.ForeignKey('Brands.id'))
-    brand = db.relationship('Brand', backref='models')
 
     def __repr__(self):
         """Shows info about Model objects"""
 
-        return "<Model id=%d year=%d brand_name=%s name=%s>" % (
+        return "<Model id=%d year=%d brand_name=%r name=%s>" % (
             self.id, self.year, self.brand_name, self.name)
 
 
@@ -46,8 +44,8 @@ class Brand(db.Model):
     def __repr__(self):
         """Shows info about Model objects"""
 
-        return "<Brand id=%d name=%s founded=%d headquarters=%s discontinued=%d>" % (
-            self.id, self.year, self.brand_name, self.name)
+        return "<Brand id=%d name=%r founded=%d headquarters=%s discontinued=%r>" % (
+            self.id, self.name, self.founded, self.headquarters, self.discontinued)
 
 
 
